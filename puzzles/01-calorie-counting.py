@@ -20,6 +20,7 @@ def task_calorie_counting_part_1():
             curr_calories = 0
         else:
             curr_calories += int(line)
+        max_calories = max(max_calories, curr_calories)
 
     util.read_lines("../resources/01-input.txt", process_line)
 
@@ -52,6 +53,7 @@ def task_calorie_counting_part_2():
         else:
             curr_calories += int(line)
 
+    compare_and_put_in_place(curr_calories)
     util.read_lines("../resources/01-input.txt", process_line)
 
     print(sum(max_calories))
