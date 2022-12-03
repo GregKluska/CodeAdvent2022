@@ -12,14 +12,15 @@ import util
 # so the first half of the characters represent items in the first compartment,
 # while the second half of the characters represent items in the second compartment.
 
+def char_to_priority(char):
+    priority = ord(char) - 96
+    if priority < 1:
+        priority += 58
+    return priority
+
+
 def task_rucksack_reorganization_part_1():
     total_priority = 0
-
-    def char_to_priority(char):
-        priority = ord(char) - 96
-        if priority < 1:
-            priority += 58
-        return priority
 
     def process_line(line):
         nonlocal total_priority
@@ -42,7 +43,60 @@ def task_rucksack_reorganization_part_1():
     print(total_priority)
 
 
+# For safety, the Elves are divided into groups of three.
+# Every Elf carries a badge that identifies their group.
+# For efficiency, within each group of three Elves, the badge is the only item type carried by all three Elves.
+# That is, if a group's badge is item type B, then all three Elves will have item type B somewhere in their rucksack,
+# and at most two of the Elves will be carrying any other item type.
+
+# The problem is that someone forgot to put this year's updated authenticity sticker on the badges.
+# All badges need to be pulled out of the rucksacks so the new authenticity stickers can be attached.
+
+# Additionally, nobody wrote down which item type corresponds to each group's badges.
+# The only way to tell which item type is the right one is by finding the one item type
+# that is common between all three Elves in each group.
+def task_rucksack_reorganization_part_2():
+    total_priority = 0
+    helper = 0
+    group_hash_map = {}
+
+    def add_priority(priority):
+        nonlocal total_priority
+        total_priority += priority
+
+    def find_badge(group):
+        for char in group:
+            if group[char] == 3:
+                return char
+        return False
+
+    def process_line(line):
+        nonlocal helper, group_hash_map
+        hash_map = {}
+
+        # after every 3 lines, add priority bc a new group is coming
+        if helper == 3:
+            add_priority(char_to_priority(find_badge(group_hash_map)))
+            helper = 0
+            group_hash_map = {}
+
+        for char in line:
+            hash_map[char] = True
+
+        for char in hash_map:
+            curr_value = group_hash_map.get(char, 0)
+            group_hash_map[char] = curr_value + 1
+
+        helper += 1
+
+    util.read_lines("../resources/03-input.txt", process_line)
+    # last case
+    add_priority(char_to_priority(find_badge(group_hash_map)))
+
+    print(total_priority)
+
+
 print("--- Part 1 ---")
 task_rucksack_reorganization_part_1()
 print("--- Part 2 ---")
-# task_rock_paper_scissors_part_2()
+task_rucksack_reorganization_part_2()
