@@ -24,17 +24,17 @@ def task_supply_stack(part):
             reading_stacks = False
             return
 
-        crates = [line[i:i + 4] for i in range(0, len(line), 4)]
+        crates = [line[idx:idx + 4] for idx in range(0, len(line), 4)]
 
         if len(stacks) == 0:  # stacks not initialised
-            for i in range(0, len(crates)):
+            for x in range(0, len(crates)):
                 stacks.append([])
 
-        for i in range(0, len(crates)):
-            content = crates[i][1]
+        for idx in range(0, len(crates)):
+            content = crates[idx][1]
             if content == " ":
                 continue
-            stacks[i].append(content)
+            stacks[idx].append(content)
 
     def process_instruction_line(line):
         nonlocal stacks, part
