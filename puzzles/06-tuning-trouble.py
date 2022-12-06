@@ -4,23 +4,23 @@ import util
 # --- Day 6: Tuning Trouble ---
 
 def task_tuning_trouble(distinct):
-    hashmap = {}
+    hashset = set()
     marker_at = 0
     position = 0
 
     def process_line(line):
-        nonlocal hashmap, marker_at, position
+        nonlocal hashset, marker_at, position
         for i in range(0, len(line)):
-            if line[i] in hashmap:
+            if line[i] in hashset:
                 helper = 0
                 for x in range(marker_at, marker_at + distinct):
                     helper += 1
-                    del hashmap[line[x]]
+                    hashset.remove(line[x])
                     if line[x] == line[i]:
                         break
                 marker_at += helper
-            hashmap[line[i]] = True
-            if len(hashmap) == distinct:
+            hashset.add(line[i])
+            if len(hashset) == distinct:
                 position = i + 1
                 return
 
