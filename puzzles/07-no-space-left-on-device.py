@@ -7,13 +7,13 @@ def get_total_spaces():
     spaces = {}
     curr_path = []
 
-    def process_command(command):
-        nonlocal curr_path
-        comm = command.split(" ")
+    def process_line(line):
+        nonlocal spaces, curr_path
 
-        # we only take "cd" because "ls" has no effect in the current line
-        if comm[1] == "cd":
-            path_to = comm[2].strip()
+        spline = line.split(" ")
+
+        if spline[0] == "$" and spline[1] == "cd":
+            path_to = spline[2].strip()
             match path_to:
                 case "/":
                     curr_path = []
@@ -21,26 +21,14 @@ def get_total_spaces():
                     del curr_path[-1]
                 case other:
                     curr_path.append(other)
-
-    def process_space(line):
-        nonlocal spaces, curr_path
-        spline = line.split(" ")
-
-        if spline[0] != "dir":
+        elif spline[0].isnumeric():
             spaces["/"] = spaces.get("/", 0) + int(spline[0])
             loc_path = ""
             for p in range(0, len(curr_path)):
                 loc_path += "/" + curr_path[p]
                 spaces[loc_path] = spaces.get(loc_path, 0) + int(spline[0])
 
-    def process_line(line):
-        if line[0] == "$":
-            process_command(line)
-        else:
-            process_space(line)
-
     util.read_lines("../resources/07-input.txt", process_line)
-
     return spaces
 
 
