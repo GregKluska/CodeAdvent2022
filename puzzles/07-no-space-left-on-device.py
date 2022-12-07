@@ -16,11 +16,11 @@ def task_no_space_left_on_device_part1():
             path_to = comm[2].strip()
             match path_to:
                 case "/":
-                    path = []
+                    curr_path = []
                 case "..":
                     del curr_path[-1]
                 case other:
-                    path = curr_path.append(path_to)
+                    curr_path.append(path_to)
 
     def process_space(line):
         nonlocal spaces, curr_path
