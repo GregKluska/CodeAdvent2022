@@ -89,7 +89,6 @@ def task_distress_signal_part_2(test=False):
     print(divider_idx[0] * divider_idx[1])
 
 
-
 print("--- Part 1 ---")
 task_distress_signal_part_1(False)
 print("--- Part 2 ---")
