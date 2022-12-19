@@ -120,4 +120,4 @@ def task_beacon_exclusion_zone_part_2(test=True):
 print("--- Part 1 ---")
 task_beacon_exclusion_zone_part_1(False)
 print("--- Part 2 ---")
-task_beacon_exclusion_zone_part_2(True)
+task_beacon_exclusion_zone_part_2(False)
